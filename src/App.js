@@ -1,6 +1,6 @@
 import './App.css'; //Imports the style of App
 import React, { Component } from 'react'; //Componet is a block from React
-
+import axios from 'axios';
 class App extends Component { //Creation of the app
 
   state = { //Boolean state
@@ -21,9 +21,10 @@ class App extends Component { //Creation of the app
     )
 
     //call api, like rebooting the application and printing information
-    console.log(formData);
-    this.setState({selectedFile: null});
-    this.setState({fileUploadedSuccessfully: true})
+    axios.post("https://dqm0wn9a38.execute-api.us-east-1.amazonaws.com/prod/file-upload", formData).then(() => {
+      this.setState({selectedFile: null});
+      this.setState({fileUploadedSuccessfully: true})
+    }) 
   }
 
   fileData = () => { //Extracts everything from the file and uploads
@@ -61,7 +62,7 @@ class App extends Component { //Creation of the app
   render() { //Creates the screen with the functions
     return (
       <div className="container">
-        <h2>Jinmeister File Upload System</h2>
+        <h2>File Upload System</h2>
         <h3>File Upload with React and Serverless API!</h3>
         <div>
           <input type="file" onChange={this.onFileChange} />
